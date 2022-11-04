@@ -1,0 +1,10 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* this is for not showing the scrollbar on Y axis */
+canvas {
+    display: block;
+}
