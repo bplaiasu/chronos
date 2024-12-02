@@ -23,6 +23,10 @@ const enemyScores = {
     'boss': 50
 };
 
+// Load sound files
+const collisionSound = document.getElementById('collisionSound');
+const levelUpSound = document.getElementById('levelUpSound');
+
 function createEnemy(type) {
     let enemy = {
         type: type,
@@ -66,6 +70,7 @@ function update() {
     if (enemiesDefeated >= 10) {
         level += 1;
         enemiesDefeated = 0;
+        levelUpSound.play(); // Play level up sound
         console.log(`Level up! Welcome to level ${level}`);
     }
 }
@@ -105,6 +110,7 @@ function checkCollisions() {
                 enemies.splice(index, 1); // Remove enemy if its health drops to zero
                 score += enemyScores[enemy.type]; // Increase score based on enemy type
                 enemiesDefeated += 1; // Increase enemies defeated counter
+                collisionSound.play(); // Play collision sound
             }
             // Here you can also decrease player's life or end game
         }
