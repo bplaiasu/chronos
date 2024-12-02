@@ -39,6 +39,9 @@ function update() {
 
     // Create new enemies
     if (Math.random() < 0.02) createEnemy();
+
+    // Check for collisions
+    checkCollisions();
 }
 
 function draw() {
@@ -52,6 +55,20 @@ function draw() {
     ctx.fillStyle = 'red';
     enemies.forEach(enemy => {
         ctx.fillRect(enemy.x, enemy.y, enemy.width, enemy.height);
+    });
+}
+
+function checkCollisions() {
+    enemies.forEach((enemy, index) => {
+        if (player.x < enemy.x + enemy.width &&
+            player.x + player.width > enemy.x &&
+            player.y < enemy.y + enemy.height &&
+            player.y + player.height > enemy.y) {
+            // Collision detected
+            console.log('Collision detected!');
+            enemies.splice(index, 1); // Remove enemy upon collision
+            // Here you can also decrease player's life or end game
+        }
     });
 }
 
