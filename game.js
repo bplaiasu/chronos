@@ -10,6 +10,7 @@ let player = {
 };
 
 let enemies = [];
+let score = 0; // Initialize score
 
 function createEnemy(type) {
     let enemy = {
@@ -61,6 +62,11 @@ function draw() {
         ctx.fillStyle = enemy.color;
         ctx.fillRect(enemy.x, enemy.y, enemy.width, enemy.height);
     });
+
+    // Draw score
+    ctx.fillStyle = 'white';
+    ctx.font = '20px Arial';
+    ctx.fillText(`Score: ${score}`, 10, 30);
 }
 
 function checkCollisions() {
@@ -69,11 +75,12 @@ function checkCollisions() {
             player.x + player.width > enemy.x &&
             player.y < enemy.y + enemy.height &&
             player.y + player.height > enemy.y) {
-            // Collision detected
+            // Collision detected with player
             console.log('Collision detected!');
             enemy.hp -= 1;
             if (enemy.hp <= 0) {
                 enemies.splice(index, 1); // Remove enemy if its health drops to zero
+                score += 10; // Increase score
             }
             // Here you can also decrease player's life or end game
         }
