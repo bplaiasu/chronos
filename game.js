@@ -11,6 +11,8 @@ let player = {
 
 let enemies = [];
 let score = 0; // Initialize score
+let level = 1; // Initialize level
+let enemiesDefeated = 0; // Initialize enemies defeated counter
 
 function createEnemy(type) {
     let enemy = {
@@ -41,13 +43,20 @@ function update() {
         }
     });
 
-    // Create new enemies
-    if (Math.random() < 0.01) createEnemy('regular');
-    if (Math.random() < 0.005) createEnemy('fast');
-    if (Math.random() < 0.003) createEnemy('strong');
+    // Create new enemies based on level
+    if (Math.random() < 0.01 * level) createEnemy('regular');
+    if (Math.random() < 0.005 * level) createEnemy('fast');
+    if (Math.random() < 0.003 * level) createEnemy('strong');
 
     // Check for collisions
     checkCollisions();
+
+    // Level up logic
+    if (enemiesDefeated >= 10) {
+        level += 1;
+        enemiesDefeated = 0;
+        console.log(`Level up! Welcome to level ${level}`);
+    }
 }
 
 function draw() {
@@ -67,6 +76,9 @@ function draw() {
     ctx.fillStyle = 'white';
     ctx.font = '20px Arial';
     ctx.fillText(`Score: ${score}`, 10, 30);
+
+    // Draw level
+    ctx.fillText(`Level: ${level}`, 10, 60);
 }
 
 function checkCollisions() {
@@ -81,6 +93,7 @@ function checkCollisions() {
             if (enemy.hp <= 0) {
                 enemies.splice(index, 1); // Remove enemy if its health drops to zero
                 score += 10; // Increase score
+                enemiesDefeated += 1; // Increase enemies defeated counter
             }
             // Here you can also decrease player's life or end game
         }
