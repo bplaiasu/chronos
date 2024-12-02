@@ -14,16 +14,25 @@ let score = 0; // Initialize score
 let level = 1; // Initialize level
 let enemiesDefeated = 0; // Initialize enemies defeated counter
 
+// Scores for each enemy type
+const enemyScores = {
+    'regular': 10,
+    'fast': 15,
+    'strong': 20,
+    'stealthy': 25,
+    'boss': 50
+};
+
 function createEnemy(type) {
     let enemy = {
         type: type,
         x: canvas.width,
         y: Math.random() * (canvas.height - 50),
-        width: 50,
-        height: 50,
-        speed: type === 'fast' ? 6 : 3,
-        color: type === 'fast' ? 'blue' : type === 'strong' ? 'green' : 'red',
-        hp: type === 'strong' ? 3 : 1
+        width: type === 'boss' ? 80 : 50,
+        height: type === 'boss' ? 80 : 50,
+        speed: type === 'fast' ? 6 : type === 'stealthy' ? 2 : 3,
+        color: type === 'fast' ? 'blue' : type === 'strong' ? 'green' : type === 'stealthy' ? 'purple' : type === 'boss' ? 'orange' : 'red',
+        hp: type === 'strong' ? 3 : type === 'boss' ? 10 : 1
     };
     enemies.push(enemy);
 }
@@ -47,6 +56,8 @@ function update() {
     if (Math.random() < 0.01 * level) createEnemy('regular');
     if (Math.random() < 0.005 * level) createEnemy('fast');
     if (Math.random() < 0.003 * level) createEnemy('strong');
+    if (Math.random() < 0.002 * level) createEnemy('stealthy');
+    if (Math.random() < 0.001 * level) createEnemy('boss');
 
     // Check for collisions
     checkCollisions();
@@ -92,7 +103,7 @@ function checkCollisions() {
             enemy.hp -= 1;
             if (enemy.hp <= 0) {
                 enemies.splice(index, 1); // Remove enemy if its health drops to zero
-                score += 10; // Increase score
+                score += enemyScores[enemy.type]; // Increase score based on enemy type
                 enemiesDefeated += 1; // Increase enemies defeated counter
             }
             // Here you can also decrease player's life or end game
