@@ -11,13 +11,16 @@ let player = {
 
 let enemies = [];
 
-function createEnemy() {
+function createEnemy(type) {
     let enemy = {
+        type: type,
         x: canvas.width,
         y: Math.random() * (canvas.height - 50),
         width: 50,
         height: 50,
-        speed: 3
+        speed: type === 'fast' ? 6 : 3,
+        color: type === 'fast' ? 'blue' : type === 'strong' ? 'green' : 'red',
+        hp: type === 'strong' ? 3 : 1
     };
     enemies.push(enemy);
 }
@@ -38,7 +41,9 @@ function update() {
     });
 
     // Create new enemies
-    if (Math.random() < 0.02) createEnemy();
+    if (Math.random() < 0.01) createEnemy('regular');
+    if (Math.random() < 0.005) createEnemy('fast');
+    if (Math.random() < 0.003) createEnemy('strong');
 
     // Check for collisions
     checkCollisions();
@@ -52,8 +57,8 @@ function draw() {
     ctx.fillRect(player.x, player.y, player.width, player.height);
 
     // Draw enemies
-    ctx.fillStyle = 'red';
     enemies.forEach(enemy => {
+        ctx.fillStyle = enemy.color;
         ctx.fillRect(enemy.x, enemy.y, enemy.width, enemy.height);
     });
 }
@@ -66,7 +71,10 @@ function checkCollisions() {
             player.y + player.height > enemy.y) {
             // Collision detected
             console.log('Collision detected!');
-            enemies.splice(index, 1); // Remove enemy upon collision
+            enemy.hp -= 1;
+            if (enemy.hp <= 0) {
+                enemies.splice(index, 1); // Remove enemy if its health drops to zero
+            }
             // Here you can also decrease player's life or end game
         }
     });
