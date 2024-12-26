@@ -70,6 +70,7 @@ window.addEventListener('load', function() {
             this.speedY = 0;
             this.maxSpeed = 2; // 2px per frame
             this.projectiles = [];
+            this.lives = 3;
         }
 
         update() {
@@ -126,6 +127,10 @@ window.addEventListener('load', function() {
         draw(context) {
             context.fillStyle = 'red';
             context.fillRect(this.x, this.y, this.width, this.height);
+
+            context.fillStyle = 'black';
+            context.font = '20px Helvetica';
+            context.fillText(this.lives, this.x, this.y);
         }
     }
 
@@ -136,7 +141,15 @@ window.addEventListener('load', function() {
             this.width = 228 * 0.2;
             this.height = 169 * 0.2;
             this.y = Math.random() * (this.game.height * 0.9 - this.height);
+
+            this.lives = 5;
+            this.score = 10;
         }
+
+        // draw(context) {
+        //     // Enemy.draw(context);
+        //     context.fillText(this.lives, this.x, this.y);
+        // }
     }
 
 
@@ -155,15 +168,27 @@ window.addEventListener('load', function() {
             this.game = game;
             this.fontSize = 25;
             this.fontFamily = 'Helvetica';
-            this.color = 'yellow';
+            this.color = 'white';
         }
 
         draw(context) {
+            context.save();
+            context.fillStyle = this.color;
+
+            // apply shadows
+            context.shadowOffsetX = 2;
+            context.shadowOffsetY = 2;
+            context.shadowColor = 'black';
+
+            context.font = this.fontSize + 'px ' + this.fontFamily;
+            // score
+            context.fillText('Score: ' + this.game.score, 20, 40)
+
             // show charging ammo
-            context.fillStyle = this.color
             for (let i = 0; i < this.game.ammo; i++) {
                 context.fillRect(20 + 5 * i, 50, 3, 20);
             }
+            context.restore();
         }
     }
 
@@ -177,6 +202,8 @@ window.addEventListener('load', function() {
             this.ui = new UI(this);
             this.keys = new Set();
             this.gameOver = false;
+            this.score = 0;
+            this.winningScore = 10;
             
             // enemies
             this.enemies = [];
@@ -201,8 +228,34 @@ window.addEventListener('load', function() {
 
             this.enemies.forEach(enemy => {
                 enemy.update();
+                // check colision between player and enemy >>> if true, player loose 1 life
+                if (this.checkCollision(this.player, enemy)) {
+                    this.player.lives--;
+                    enemy.markForDeletion = true;
+                }
+
+                this.player.projectiles.forEach(projectile => {
+                    // if projectile touch the enemy >>> enemy loose 1 life
+                    if (this.checkCollision(projectile, enemy)) {
+                        // console.log('enemy hit...')
+                        enemy.lives--;
+                        projectile.markForDeletion = true;
+
+                        // if enemy has no more lives then enemy dissapear and enemy score is added to the game score
+                        if (enemy.lives <= 0) {
+                            enemy.markForDeletion = true;
+                            this.score += enemy.score;
+                            if (this.score > this.winningScore) this.gameOver = true;
+                        }
+                    }
+                })
+                
+                // if no lives available the game finish
+                if (this.player.lives <= 0) {
+                    this.gameOver = true;
+                }
             });
-            this.enemies = this.enemies.filter(enemy => !this.enemies.markForDeletion);
+            this.enemies = this.enemies.filter(enemy => !enemy.markForDeletion);
 
             if (this.enemyTimer > this.enemyInterval && !this.gameOver) {
                 this.addEnemy()
@@ -223,6 +276,15 @@ window.addEventListener('load', function() {
 
         addEnemy() {
             this.enemies.push(new Enemy1(this));
+        }
+
+        checkCollision(object1, object2) {
+            return (
+                object1.x + object1.width > object2.x &&
+                object1.x < object2.x + object2.width &&
+                object1.y + object1.height > object2.y &&
+                object1.y < object2.y + object2.height
+            );
         }
     }
 
