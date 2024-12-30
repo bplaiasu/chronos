@@ -5,7 +5,7 @@ class InputHandler {
             if (e.key === 'ArrowUp' || e.key === 'ArrowDown' || e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
                 this.game.keys.add(e.key);
             } else if (e.key === ' ') {
-                this.game.player.shootTop();
+                this.game.player.shoot();
             }
         })
 

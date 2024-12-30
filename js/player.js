@@ -18,12 +18,12 @@ class Player {
         // don't let the player object to leave canvas borders
         if (this.game.keys.has('ArrowUp') && this.y >= 0) this.speedY = -this.maxSpeed;
         else if (this.game.keys.has('ArrowDown') && this.y + this.height <= this.game.height) this.speedY = this.maxSpeed;
-        else if (this.game.keys.has('ArrowLeft') && this.x >= 0) this.speedX = -this.maxSpeed;
+        else this.speedY = 0;
+
+        if (this.game.keys.has('ArrowLeft') && this.x >= 0) this.speedX = -this.maxSpeed;
         else if (this.game.keys.has('ArrowRight') && this.x + this.width <= this.game.width) this.speedX = this.maxSpeed;
-        else {
-            this.speedX = 0;
-            this.speedY = 0;
-        }
+        else this.speedX = 0;
+
         this.x += this.speedX;
         this.y += this.speedY;
 
@@ -44,7 +44,7 @@ class Player {
         });
     }
 
-    shootTop() {
+    shoot() {
         if (this.game.ammo > 0) {
             this.projectiles.push(new Projectile(this.game, this.x + 100, this.y + 30));
             this.game.ammo--;
