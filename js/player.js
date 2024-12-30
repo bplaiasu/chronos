@@ -1,15 +1,16 @@
 class Player {
     constructor(game) {
         this.game = game;
-        this.width = 120;
-        this.height = 190;
+        this.spriteWidth = 120;     // initial width of the player
+        this.spriteHeight = 190;    // initial height of the player
+        this.width;
+        this.height;
         this.x = 20;
         this.y = 100;
         this.speedX = 0;
         this.speedY = 0;
-        this.maxSpeed = 5; // 5px per frame
+        this.maxSpeed = 3; // 5px per frame
         this.projectiles = [];
-        // this.lives = 3; // initial lives
     }
 
     // changes player property over time
@@ -48,5 +49,11 @@ class Player {
             this.projectiles.push(new Projectile(this.game, this.x + 100, this.y + 30));
             this.game.ammo--;
         }
+    }
+
+    // player resize
+    resize() {
+        this.width = this.spriteWidth * this.game.ratio;
+        this.height = this.spriteHeight * this.game.ratio;
     }
 }

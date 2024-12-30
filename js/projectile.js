@@ -5,7 +5,7 @@ class Projectile {
         this.y = y;
         this.width = 10;
         this.height = 3;
-        this.speed = 3;
+        this.speed = 6;     // represent twice the Player speed
         this.markForDeletion = false;
     }
 

@@ -18,8 +18,8 @@ window.addEventListener('load', function() {
             this.keys = new Set();
             this.gameOver = false;
             this.lives = 3;     // initial lives
-            this.score = 0;
-            this.winningScore = 30;
+            this.score = 0;     // initial game score
+            this.winningScore = 1000;
             
             // enemies
             this.enemies = [];
@@ -34,6 +34,30 @@ window.addEventListener('load', function() {
 
             // define the stars background
             this.stars = []
+
+            // dinamyc resize of the objects
+            this.baseHeight = 720;
+            this.ratio = this.height / this.baseHeight;
+            
+            this.resize(this.width, this.height, this.baseHeight);
+            window.addEventListener('resize', e => {
+                this.resize(e.currentTarget.innerWidth, e.currentTarget.innerHeight, this.baseHeight);
+            })
+        }
+
+        resize(width, height, baseHeight) {
+            canvas.width = width;
+            canvas.height = height;
+            this.width = canvas.width;
+            this.height = canvas.height;
+            this.baseHeight = baseHeight;
+            this.ratio = this.height / this.baseHeight;
+            this.player.resize();
+            
+            this.enemies.forEach(enemy => {
+                enemy.resize();
+            })
+            // console.log(this.height, this.baseHeight, this.ratio);
         }
 
         update(deltaTime) {
@@ -94,16 +118,17 @@ window.addEventListener('load', function() {
         }
 
         draw(context) {
-            this.player.draw(context);
+            this.stars.forEach(star => {
+                star.draw(context);
+            });
+
             this.ui.draw(context);
+            this.player.draw(context);
 
             this.enemies.forEach(enemy => {
                 enemy.draw(context);
             });
             
-            this.stars.forEach(star => {
-                star.draw(context);
-            });
         }
 
         addEnemy() {
