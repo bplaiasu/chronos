@@ -1,8 +1,10 @@
-class Enemy1 extends Enemy {
+class Aircraft_01 extends Enemy {
     constructor(game) {
         super(game);
-        this.spriteWidth = 228 * .2;
-        this.spriteHeight = 169 * .2;
+        this.image = document.getElementById("aircraft_01");
+        this.scale = 0.2;
+        this.spriteWidth = this.image.width * this.scale;
+        this.spriteHeight = this.image.height * this.scale;
         this.width = this.spriteWidth;
         this.height = this.spriteHeight;
         this.speedX = -2;
@@ -10,17 +12,22 @@ class Enemy1 extends Enemy {
 
         this.lives = 1;
         this.score = 10;
+
     }
 
     draw(context) {
         // show enemy
-        context.fillStyle = 'red';
-        context.fillRect(this.x, this.y, this.width, this.height);
+        context.drawImage(this.image, this.x, this.y, this.width, this.height);
 
-        // show enemy lives - just for debuging
+        // only for debug mode
+        context.storekeStyle = this.game.debugColor;
         context.fillStyle = 'yellow';
         context.font = 20 * this.game.ratio + 'px Helvetica';
-        context.fillText(this.lives, this.x + this.width * .4, this.y + this.height * .6);
+        if (this.game.debug) {
+            context.strokeRect(this.x, this.y, this.width, this.height);
+            // show enemy lives
+            context.fillText(this.lives, this.x + this.width * .4, this.y + this.height * .2);
+        }
     }
 
     // resizing enemy

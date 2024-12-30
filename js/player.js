@@ -1,8 +1,10 @@
 class Player {
     constructor(game) {
         this.game = game;
-        this.spriteWidth = 120;     // initial width of the player
-        this.spriteHeight = 190;    // initial height of the player
+        this.image = document.getElementById("player");
+        this.scale = 0.2;
+        this.spriteWidth = this.image.width * this.scale;     // initial width of the player
+        this.spriteHeight = this.image.height * this.scale;    // initial height of the player
         this.width;
         this.height;
         this.x = 20;                // initial X position of the player
@@ -36,10 +38,9 @@ class Player {
 
     // how the player looks like
     draw(context) {
-        console.log(this.game.height, this.spriteHeight, this.game.ratio, this.y);
-
-        context.fillStyle = 'green';
-        context.fillRect(this.x, this.y, this.width, this.height);
+        context.strokeStyle = this.game.debugColor;
+        if (this.game.debug) context.strokeRect(this.x, this.y, this.width, this.height);
+        context.drawImage(this.image, this.x, this.y, this.width, this.height);
         
         this.projectiles.forEach(projectile => {
             projectile.draw(context);
@@ -49,7 +50,7 @@ class Player {
     // show projectiles on screen
     shoot() {
         if (this.game.ammo > 0) {
-            this.projectiles.push(new Projectile(this.game, this.x + 100, this.y + 30));
+            this.projectiles.push(new Projectile(this.game, this.x + 112, this.y + 31));
             this.game.ammo--;
         }
     }

@@ -18,11 +18,13 @@ window.addEventListener('load', function() {
             this.lives = 3;     // initial lives
             this.score = 0;     // initial game score
             this.winningScore = 1000;
+            this.debug = true;
+            this.debugColor = 'white';
             
             // enemies
             this.enemies = [];
             this.enemyTimer = 0;
-            this.enemyInterval = 1000;  // add enemy every 1sec
+            this.enemyInterval = 3000;  // add enemy every 1sec
 
             // ammos
             this.ammo = 20;     // initial ammo
@@ -127,7 +129,7 @@ window.addEventListener('load', function() {
 
         // add enemies of type Enemy1
         addEnemy() {
-            this.enemies.push(new Enemy1(this));
+            this.enemies.push(new Aircraft_01(this));
         }
 
         // check collision between different object (eg: player vs enemy / projectile vs enemy)
