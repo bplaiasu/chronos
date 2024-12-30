@@ -1,0 +1,18 @@
+class InputHandler {
+    constructor(game) {
+        this.game = game;
+        window.addEventListener('keydown', e => {
+            if (e.key === 'ArrowUp' || e.key === 'ArrowDown' || e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+                this.game.keys.add(e.key);
+            } else if (e.key === ' ') {
+                this.game.player.shootTop();
+            }
+        })
+
+        window.addEventListener('keyup', e => {
+            if (this.game.keys.has(e.key)) {
+                this.game.keys.delete(e.key);
+            }
+        })
+    }
+}
