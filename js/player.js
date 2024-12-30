@@ -5,11 +5,11 @@ class Player {
         this.spriteHeight = 190;    // initial height of the player
         this.width;
         this.height;
-        this.x = 20;
-        this.y = 100;
+        this.x = 20;                // initial X position of the player
+        this.y = (this.game.height - this.spriteHeight) / 2;    // initial Y position of the player
         this.speedX = 0;
         this.speedY = 0;
-        this.maxSpeed = 3; // 5px per frame
+        this.maxSpeed = 3;          // movement pixel per frame
         this.projectiles = [];
     }
 
@@ -36,6 +36,8 @@ class Player {
 
     // how the player looks like
     draw(context) {
+        console.log(this.game.height, this.spriteHeight, this.game.ratio, this.y);
+
         context.fillStyle = 'green';
         context.fillRect(this.x, this.y, this.width, this.height);
         
@@ -44,6 +46,7 @@ class Player {
         });
     }
 
+    // show projectiles on screen
     shoot() {
         if (this.game.ammo > 0) {
             this.projectiles.push(new Projectile(this.game, this.x + 100, this.y + 30));
@@ -51,7 +54,7 @@ class Player {
         }
     }
 
-    // player resize
+    // player resizing (resolution dependency)
     resize() {
         this.width = this.spriteWidth * this.game.ratio;
         this.height = this.spriteHeight * this.game.ratio;

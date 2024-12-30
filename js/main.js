@@ -4,8 +4,6 @@ window.addEventListener('load', function() {
     const ctx = canvas.getContext('2d');
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
-    // canvas.width = 1500;
-    // canvas.height = 700;
 
 
     class Game {
@@ -57,7 +55,6 @@ window.addEventListener('load', function() {
             this.enemies.forEach(enemy => {
                 enemy.resize();
             })
-            // console.log(this.height, this.baseHeight, this.ratio);
         }
 
         update(deltaTime) {
@@ -80,11 +77,10 @@ window.addEventListener('load', function() {
                 this.player.projectiles.forEach(projectile => {
                     // if projectile touch the enemy >>> enemy loose 1 life
                     if (this.checkCollision(projectile, enemy)) {
-                        // console.log('enemy hit...')
                         enemy.lives--;
                         projectile.markForDeletion = true;
 
-                        // if enemy has no more lives then enemy dissapear and enemy score is added to the game score
+                        // if enemy has no more lives >>> enemy dissapear and enemy score is added to the game score
                         if (enemy.lives <= 0) {
                             enemy.markForDeletion = true;
                             this.score += enemy.score;
@@ -102,7 +98,6 @@ window.addEventListener('load', function() {
 
             if (this.enemyTimer > this.enemyInterval && !this.gameOver) {
                 this.addEnemy();
-                // this.addStars();
                 this.enemyTimer = 0;
             } else {
                 this.enemyTimer += deltaTime; 
@@ -110,8 +105,7 @@ window.addEventListener('load', function() {
             
             // show background stars
             this.stars.forEach(star => {
-                star.update();
-                
+                star.update();                
             })
             this.stars = this.stars.filter(star => !star.markForDeletion);
             this.addStars();
@@ -131,10 +125,12 @@ window.addEventListener('load', function() {
             
         }
 
+        // add enemies of type Enemy1
         addEnemy() {
             this.enemies.push(new Enemy1(this));
         }
 
+        // check collision between different object (eg: player vs enemy / projectile vs enemy)
         checkCollision(object1, object2) {
             return (
                 object1.x + object1.width > object2.x &&
