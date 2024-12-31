@@ -23,14 +23,21 @@ window.addEventListener('load', function() {
             
             // enemies
             this.enemies = [];
-            this.enemyTimer = 0;
-            this.enemyInterval = 3000;  // add enemy every 1sec
+            this.aircraft01Timer = 0;
+            this.aircraft02Timer = 0;
+
+            // enemies intervals (in seconds)
+            this.aircraft01Interval = 1500;
+            this.aircraft02Interval = 4000;
 
             // ammos
             this.ammo = 20;     // initial ammo
             this.maxAmmo = 50;  // maximum ammo after refresh and loading during the game
             this.ammoTimer = 0;
             this.ammoInterval = 1000;    // add ammo every interval
+
+            // types of ammo: gun, missile, 
+            this.ammo_type = 'gun'
 
             // define the stars background
             this.stars = []
@@ -98,12 +105,19 @@ window.addEventListener('load', function() {
             });
             this.enemies = this.enemies.filter(enemy => !enemy.markForDeletion);
 
-            if (this.enemyTimer > this.enemyInterval && !this.gameOver) {
-                this.addEnemy();
-                this.enemyTimer = 0;
-            } else {
-                this.enemyTimer += deltaTime; 
+            if (!this.gameOver) {
+                if (this.aircraft01Timer > this.aircraft01Interval) {
+                    this.addAircraft01();
+                    this.aircraft01Timer = 0;
+                } else this.aircraft01Timer += deltaTime; 
+                
+    
+                if (this.aircraft02Timer > this.aircraft02Interval) {
+                    this.addAircraft02();
+                    this.aircraft02Timer = 0;
+                } else this.aircraft02Timer += deltaTime;     
             }
+            
             
             // show background stars
             this.stars.forEach(star => {
@@ -127,10 +141,9 @@ window.addEventListener('load', function() {
             
         }
 
-        // add enemies of type Enemy1
-        addEnemy() {
-            this.enemies.push(new Aircraft_01(this));
-        }
+        // add enemies
+        addAircraft01() { this.enemies.push(new Aircraft_01(this)); }
+        addAircraft02() { this.enemies.push(new Aircraft_02(this)); }
 
         // check collision between different object (eg: player vs enemy / projectile vs enemy)
         checkCollision(object1, object2) {

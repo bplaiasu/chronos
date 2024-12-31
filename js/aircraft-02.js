@@ -1,17 +1,17 @@
-class Aircraft_01 extends Enemy {
+class Aircraft_02 extends Enemy {
     constructor(game) {
         super(game);
-        this.image = document.getElementById("aircraft_01");
+        this.image = document.getElementById("aircraft_02");
         this.scale = 0.2;
-        this.spriteWidth = this.image.width * this.scale;
-        this.spriteHeight = this.image.height * this.scale;
+        this.spriteWidth = this.image.width * this.scale * this.game.ratio;
+        this.spriteHeight = this.image.height * this.scale * this.game.ratio;
         this.width = this.spriteWidth;
         this.height = this.spriteHeight;
-        this.speedX = -2;
-        this.y = Math.random() * (this.game.height * 0.9 - this.height);
+        this.speedX = -20;
+        this.y = Math.random() * (this.game.height * 0.9);
 
-        this.lives = 1;
-        this.score = 10;
+        this.lives = 2;
+        this.score = 100;
 
     }
 
@@ -25,6 +25,7 @@ class Aircraft_01 extends Enemy {
         context.font = 20 * this.game.ratio + 'px Helvetica';
         if (this.game.debug) {
             context.strokeRect(this.x, this.y, this.width, this.height);
+            
             // show enemy lives
             context.fillText(this.lives, this.x + this.width * .4, this.y + this.height * .2);
         }

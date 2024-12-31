@@ -3,15 +3,15 @@ class Player {
         this.game = game;
         this.image = document.getElementById("player");
         this.scale = 0.2;
-        this.spriteWidth = this.image.width * this.scale;     // initial width of the player
-        this.spriteHeight = this.image.height * this.scale;    // initial height of the player
+        this.spriteWidth = this.image.width * this.scale;       // initial width of the player
+        this.spriteHeight = this.image.height * this.scale;     // initial height of the player
         this.width;
         this.height;
-        this.x = 20;                // initial X position of the player
+        this.x = 20;        // initial X position of the player
         this.y = (this.game.height - this.spriteHeight) / 2;    // initial Y position of the player
         this.speedX = 0;
         this.speedY = 0;
-        this.maxSpeed = 3;          // movement pixel per frame
+        this.maxSpeed = 5;      // movement pixel per frame
         this.projectiles = [];
     }
 
@@ -50,7 +50,8 @@ class Player {
     // show projectiles on screen
     shoot() {
         if (this.game.ammo > 0) {
-            this.projectiles.push(new Projectile(this.game, this.x + 112, this.y + 31));
+            // this.projectiles.push(new Projectile(this.game, this.x + 145, this.y + 40));
+            this.projectiles.push(new Projectile(this.game, this.x + this.width - 10, this.y + this.height/2 - 2));
             this.game.ammo--;
         }
     }
