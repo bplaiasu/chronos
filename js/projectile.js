@@ -6,7 +6,7 @@ class Projectile {
 
         this.ammoType = {
             gun: {
-                distance: 0.50,
+                distance: 0.7,
                 ammo: 50,
                 width: 13,
                 height: 3,

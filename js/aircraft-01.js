@@ -1,7 +1,7 @@
 class Aircraft_01 extends Enemy {
     constructor(game) {
         super(game);
-        this.image = document.getElementById("aircraft_01");
+        this.image = document.getElementById("enemy_01");
         this.scale = 0.15;
         this.spriteWidth = this.image.width * this.scale * this.game.ratio;       // initial width of the enemy
         this.spriteHeight = this.image.height * this.scale * this.game.ratio;     // initial height of the enemy

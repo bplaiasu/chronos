@@ -17,18 +17,18 @@ window.addEventListener('load', function() {
             this.gameOver = false;
             this.lives = 3;     // initial lives
             this.score = 0;     // initial game score
-            this.winningScore = 1000;
+            this.winningScore = 7000;
             this.debug = true;
             this.debugColor = 'white';
             
             // enemies
             this.enemies = [];
-            this.aircraft01Timer = 0;
-            this.aircraft02Timer = 0;
+            this.enemy01Timer = 0;
+            this.enemy02Timer = 0;
 
             // enemies intervals (in seconds)
-            this.aircraft01Interval = 1500;
-            this.aircraft02Interval = 4000;
+            this.enemy01Interval = 1500;
+            this.enemy02Interval = 4000;
 
             // ammos
             this.ammo = 20;     // initial ammo
@@ -50,6 +50,9 @@ window.addEventListener('load', function() {
             window.addEventListener('resize', e => {
                 this.resize(e.currentTarget.innerWidth, e.currentTarget.innerHeight, this.baseHeight);
             })
+
+            // explosions
+            this.explosions = [];
         }
 
         resize(width, height, baseHeight) {
@@ -81,6 +84,7 @@ window.addEventListener('load', function() {
                 if (this.checkCollision(this.player, enemy)) {
                     this.lives--;
                     enemy.markForDeletion = true;
+                    this.playerExplosion(enemy);
                 }
 
                 this.player.projectiles.forEach(projectile => {
@@ -92,6 +96,7 @@ window.addEventListener('load', function() {
                         // if enemy has no more lives >>> enemy dissapear and enemy score is added to the game score
                         if (enemy.lives <= 0) {
                             enemy.markForDeletion = true;
+                            this.enemyExplosion(enemy);
                             this.score += enemy.score;
                             if (this.score >= this.winningScore) this.gameOver = true;
                         }
@@ -106,16 +111,16 @@ window.addEventListener('load', function() {
             this.enemies = this.enemies.filter(enemy => !enemy.markForDeletion);
 
             if (!this.gameOver) {
-                if (this.aircraft01Timer > this.aircraft01Interval) {
+                if (this.enemy01Timer > this.enemy01Interval) {
                     this.addAircraft01();
-                    this.aircraft01Timer = 0;
-                } else this.aircraft01Timer += deltaTime; 
+                    this.enemy01Timer = 0;
+                } else this.enemy01Timer += deltaTime; 
                 
     
-                if (this.aircraft02Timer > this.aircraft02Interval) {
+                if (this.enemy02Timer > this.enemy02Interval) {
                     this.addAircraft02();
-                    this.aircraft02Timer = 0;
-                } else this.aircraft02Timer += deltaTime;     
+                    this.enemy02Timer = 0;
+                } else this.enemy02Timer += deltaTime;     
             }
             
             
@@ -125,25 +130,48 @@ window.addEventListener('load', function() {
             })
             this.stars = this.stars.filter(star => !star.markForDeletion);
             this.addStars();
+
+            // explosions
+            this.explosions.forEach(explosion => explosion.update(deltaTime));
+            this.explosions = this.explosions.filter(explosion => !explosion.markForDeletion);
         }
 
         draw(context) {
+            // stars
             this.stars.forEach(star => {
                 star.draw(context);
             });
 
+            // UI
             this.ui.draw(context);
+
+            // player
             this.player.draw(context);
 
+            // enemies
             this.enemies.forEach(enemy => {
                 enemy.draw(context);
             });
             
+            // explosions
+            this.explosions.forEach(explosion => {
+                explosion.draw(context);
+            })
         }
 
         // add enemies
         addAircraft01() { this.enemies.push(new Aircraft_01(this)); }
         addAircraft02() { this.enemies.push(new Aircraft_02(this)); }
+
+        // add explosions
+        enemyExplosion(enemy) {
+            const randomize = Math.random();
+            if (randomize < 1) this.explosions.push(new EnemyExplosion(this, enemy.x + enemy.width * 0.5, enemy.y + enemy.height * 0.5));
+        }
+        playerExplosion(enemy) {
+            const randomize = Math.random();
+            if (randomize < 1) this.explosions.push(new PlayerExplosion(this, enemy.x + enemy.width * 0.5, enemy.y + enemy.height * 0.5));
+        }
 
         // check collision between different object (eg: player vs enemy / projectile vs enemy)
         checkCollision(object1, object2) {
