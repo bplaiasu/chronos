@@ -1,5 +1,5 @@
 class Explosion {
-    constructor(game, x, y) {
+    constructor(game) {
         this.game = game;
         this.frameX = 0;
         this.frameY = 0;

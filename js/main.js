@@ -3,7 +3,7 @@ window.addEventListener('load', function() {
     const canvas = document.getElementById('canvas1');
     const ctx = canvas.getContext('2d');
     canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+    canvas.height = window.innerHeight / 1.5;
 
 
     class Game {
@@ -85,6 +85,9 @@ window.addEventListener('load', function() {
                     this.lives--;
                     enemy.markForDeletion = true;
                     this.playerExplosion(enemy);
+                    
+                    // if player collide with enemy remove all enemies
+                    this.enemies = [];
                 }
 
                 this.player.projectiles.forEach(projectile => {
