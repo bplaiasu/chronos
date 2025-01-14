@@ -5,7 +5,7 @@
 }
 
 /* this is for not showing the scrollbar on Y axis */
-canvas {
+#canvas1 {
     display: block;
     position: absolute;
     top: 50%;

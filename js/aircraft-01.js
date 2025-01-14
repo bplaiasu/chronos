@@ -8,7 +8,7 @@ class Aircraft_01 extends Enemy {
         this.width = this.spriteWidth;
         this.height = this.spriteHeight;
         this.speedX = -10;
-        this.y = Math.random() * (this.game.height * 0.9);
+        this.y = Math.random() * (this.game.height * 0.75) + 100;
 
         this.lives = 1;
         this.score = 50;
