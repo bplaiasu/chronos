@@ -3,9 +3,15 @@ window.addEventListener('load', function() {
     const canvas = document.getElementById('canvas1');
     const ctx = canvas.getContext('2d');
     canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight / 1.5;
+    canvas.height = 640;
 
+    // create backing canvas
+    var backup_canvas = document.getElementById('canvas2');
+    var backup_ctx = backup_canvas.getContext('2d');
+    backup_canvas.width = window.innerWidth;
+    backup_canvas.height = 640;
 
+    
     class Game {
         constructor(width, height) {
             this.width = width;
@@ -53,6 +59,10 @@ window.addEventListener('load', function() {
 
             // explosions
             this.explosions = [];
+
+            // adding level
+            this.level = 1; 
+            this.levelMap = new Level1(this);
         }
 
         resize(width, height, baseHeight) {
@@ -80,15 +90,15 @@ window.addEventListener('load', function() {
 
             this.enemies.forEach(enemy => {
                 enemy.update();
-                // check colision between player and enemy >>> if true, player loose 1 life
-                if (this.checkCollision(this.player, enemy)) {
-                    this.lives--;
-                    enemy.markForDeletion = true;
-                    this.playerExplosion(enemy);
+                // // check colision between player and enemy >>> if true, player loose 1 life
+                // if (this.checkCollision(this.player, enemy)) {
+                //     this.lives--;
+                //     enemy.markForDeletion = true;
+                //     this.playerExplosion(enemy);
                     
-                    // if player collide with enemy remove all enemies
-                    this.enemies = [];
-                }
+                //     // if player collide with enemy remove all enemies
+                //     this.enemies = [];
+                // }
 
                 this.player.projectiles.forEach(projectile => {
                     // if projectile touch the enemy >>> enemy loose 1 life
@@ -105,6 +115,9 @@ window.addEventListener('load', function() {
                         }
                     }
                 })
+
+                // check colision between player and environment
+                // if (this.checkCollision(this.player, ))
                 
                 // if no lives available the game finish
                 if (this.lives <= 0) {
@@ -117,13 +130,12 @@ window.addEventListener('load', function() {
                 if (this.enemy01Timer > this.enemy01Interval) {
                     this.addAircraft01();
                     this.enemy01Timer = 0;
-                } else this.enemy01Timer += deltaTime; 
+                } else this.enemy01Timer += deltaTime;
                 
-    
                 if (this.enemy02Timer > this.enemy02Interval) {
                     this.addAircraft02();
                     this.enemy02Timer = 0;
-                } else this.enemy02Timer += deltaTime;     
+                } else this.enemy02Timer += deltaTime;
             }
             
             
@@ -137,9 +149,14 @@ window.addEventListener('load', function() {
             // explosions
             this.explosions.forEach(explosion => explosion.update(deltaTime));
             this.explosions = this.explosions.filter(explosion => !explosion.markForDeletion);
+
+            // this.levelMap.update();
         }
 
-        draw(context) {
+        draw(context, context1) {
+            // levels
+            this.levelMap.draw(context, context1);
+            
             // stars
             this.stars.forEach(star => {
                 star.draw(context);
@@ -199,9 +216,11 @@ window.addEventListener('load', function() {
         const deltaTime = timeStamp - lastTime;
         lastTime = timeStamp;
         ctx.clearRect(0, 0, canvas.width, canvas.height);
+        // backup_ctx.clearRect(0, 0, backCanvas.width, backCanvas.height);
         game.update(deltaTime);
-        game.draw(ctx);
+        game.draw(ctx, backup_ctx);
+        // game.draw(backup_ctx);
         requestAnimationFrame(animate);
     }
     animate(0);
-})
+    })
