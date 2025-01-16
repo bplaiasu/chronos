@@ -6,52 +6,54 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chronos</title>
 
-    <link rel="stylesheet" href="assets/css/style.css">
+    <!-- Add icon link -->
+    <link rel="icon" type="image/x-icon" href="./assets/img/player/spaceship01.png">
+
+    <link rel="stylesheet" href="./assets/css/style.css">
 </head>
 <body>
     <canvas id="canvas1"></canvas>
-    <canvas id="canvas2"></canvas>
+    <canvas id="canvas2" hidden></canvas>
 
     <div class="assets">
         <!-- player -->
-        <!-- <img id="player" class="hidden" src="assets/img/spaceship.png"> -->
-        <img id="player" class="hidden" src="assets/img/player/spaceship01.png">
+        <img id="player" class="hidden" src="./assets/img/player/spaceship01.png">
 
         <!-- aircraft enemies -->
-        <img id="enemy_01" class="hidden" src="assets/img/enemy/01.png">
-        <img id="enemy_02" class="hidden" src="assets/img/enemy/02.png">
-        <img id="enemy_03" class="hidden" src="assets/img/enemy/03.png">
-        <img id="enemy_04" class="hidden" src="assets/img/enemy/04.png">
-        <img id="enemy_05" class="hidden" src="assets/img/enemy/05.png">
-        <img id="enemy_06" class="hidden" src="assets/img/enemy/06.png">
-        <img id="enemy_07" class="hidden" src="assets/img/enemy/07.png">
-        <img id="enemy_08" class="hidden" src="assets/img/enemy/08.png">
-        <img id="enemy_09" class="hidden" src="assets/img/enemy/09.png">
-        <img id="enemy_10" class="hidden" src="assets/img/enemy/10.png">
+        <img id="enemy_01" class="hidden" src="./assets/img/enemy/01.png">
+        <img id="enemy_02" class="hidden" src="./assets/img/enemy/02.png">
+        <img id="enemy_03" class="hidden" src="./assets/img/enemy/03.png">
+        <img id="enemy_04" class="hidden" src="./assets/img/enemy/04.png">
+        <img id="enemy_05" class="hidden" src="./assets/img/enemy/05.png">
+        <img id="enemy_06" class="hidden" src="./assets/img/enemy/06.png">
+        <img id="enemy_07" class="hidden" src="./assets/img/enemy/07.png">
+        <img id="enemy_08" class="hidden" src="./assets/img/enemy/08.png">
+        <img id="enemy_09" class="hidden" src="./assets/img/enemy/09.png">
+        <img id="enemy_10" class="hidden" src="./assets/img/enemy/10.png">
         
         <!-- explosions -->
-        <img id="enemy-explosion" class="hidden" src="assets/img/explosions/smokeExplosion.png">
-        <img id="player-explosion" class="hidden" src="assets/img/explosions/explosion2.png">
+        <img id="enemy-explosion" class="hidden" src="./assets/img/explosions/smokeExplosion.png">
+        <img id="player-explosion" class="hidden" src="./assets/img/explosions/explosion2.png">
 
         <!-- tiles -->
-        <img id="tiles" class="hidden" src="assets/img/tiles/lunar1b_tileset_compact.png">
-        <img id="font-tile" class="hidden" src="assets/img/tiles/0xDB_terminal_chonkerC_8x8_1bpp_bmp_font_packed_1bpp.png">
+        <img id="tiles" class="hidden" src="./assets/img/tiles/lunar1b_tileset_compact.png">
+        <img id="font-tile" class="hidden" src="./assets/img/tiles/0xDB_terminal_chonkerC_8x8_1bpp_bmp_font_packed_1bpp.png">
     </div>
     
-    <script src="js/input-handler.js"></script>
-    <script src="js/background.js"></script>
-    <script src="js/star.js"></script>
-    <script src="js/player.js"></script>
-    <script src="js/projectile.js"></script>
-    <script src="js/enemy.js"></script>
-    <script src="js/layer.js"></script>
-    <script src="js/particle.js"></script>
-    <script src="js/ui.js"></script>
-    <script src="js/aircraft-01.js"></script>
-    <script src="js/aircraft-02.js"></script>
-    <script src="js/explosion.js"></script>
-    <script src="js/level-map-platforms-config.js"></script>
-    <script src="js/platform.js"></script>
-    <script src="js/main.js"></script>
+    <script src="./js/input-handler.js"></script>
+    <script src="./js/background.js"></script>
+    <script src="./js/star.js"></script>
+    <script src="./js/player.js"></script>
+    <script src="./js/projectile.js"></script>
+    <script src="./js/enemy.js"></script>
+    <script src="./js/layer.js"></script>
+    <script src="./js/particle.js"></script>
+    <script src="./js/ui.js"></script>
+    <script src="./js/aircraft-01.js"></script>
+    <script src="./js/aircraft-02.js"></script>
+    <script src="./js/explosion.js"></script>
+    <script src="./js/level-map-platforms-config.js"></script>
+    <script src="./js/platform.js"></script>
+    <script src="./js/main.js"></script>
 </body>
 </html>

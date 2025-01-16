@@ -8,8 +8,9 @@ window.addEventListener('load', function() {
     // create backing canvas
     var backup_canvas = document.getElementById('canvas2');
     var backup_ctx = backup_canvas.getContext('2d');
-    backup_canvas.width = window.innerWidth;
-    backup_canvas.height = 640;
+    backup_canvas.width = canvas.width;
+    backup_canvas.height = canvas.height;
+    // console.log(backup_canvas)
 
     
     class Game {
@@ -216,11 +217,9 @@ window.addEventListener('load', function() {
         const deltaTime = timeStamp - lastTime;
         lastTime = timeStamp;
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        // backup_ctx.clearRect(0, 0, backCanvas.width, backCanvas.height);
         game.update(deltaTime);
         game.draw(ctx, backup_ctx);
-        // game.draw(backup_ctx);
         requestAnimationFrame(animate);
     }
     animate(0);
-    })
+})

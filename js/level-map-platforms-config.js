@@ -39,7 +39,7 @@ level_platforms = {
         'make_big': 1
     },
     platform4: {
-        'x': 1800,
+        'x': 1750,
         'y': 64,
         'map': [
             [23, 23],

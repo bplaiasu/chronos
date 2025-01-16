@@ -19,7 +19,7 @@ class Platform {
             9 - bottomRightCorner       0 - zero                11 - topLine1                   12 - bottomLine
             13 - topLine2               14 - middle1            15 - middle2                    
             16 - radar top left         17 - radar top right    18 - radar bottom left          19 - radar bottom right
-            20 - another left corner    21 - another middle     22 - another right corner
+            20 - another left corner    21 - another middle     22 - another right corner       23 - meteor
             
             // letters
             100 - letter C      101 - letter H      102 - letter R      103 - letter O      104 - letter N
