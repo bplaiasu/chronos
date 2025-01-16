@@ -1,0 +1,30 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* this is for not showing the scrollbar on Y axis */
+#canvas1 {
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #000;
+    /* background: #4d79bc; */
+    max-width: 100%;
+    max-height: 100%;
+}
+
+img.hidden {
+    display: none;
+}
+
+
+body {
+    height: 100vh;
+    /* background: linear-gradient(0deg, rgb(36, 141, 29) 0%, rgb(17, 51, 161) 60%); */
+    /* background: linear-gradient(0deg, rgba(34,193,195,1) 0%, rgba(253,187,45,1) 100%); */
+    background: radial-gradient(circle, rgba(238,174,202,1) 0%, rgba(148,187,233,1) 100%); 
+}
