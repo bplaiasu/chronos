@@ -64,6 +64,7 @@ window.addEventListener('load', function() {
             // adding level
             this.level = 1; 
             this.levelMap = new Level1(this);
+            // console.log(this.levelMap.platforms)
         }
 
         resize(width, height, baseHeight) {
@@ -126,6 +127,7 @@ window.addEventListener('load', function() {
                 }
             });
             this.enemies = this.enemies.filter(enemy => !enemy.markForDeletion);
+            // console.log(this.enemies)
 
             if (!this.gameOver) {
                 if (this.enemy01Timer > this.enemy01Interval) {
@@ -151,7 +153,8 @@ window.addEventListener('load', function() {
             this.explosions.forEach(explosion => explosion.update(deltaTime));
             this.explosions = this.explosions.filter(explosion => !explosion.markForDeletion);
 
-            // this.levelMap.update();
+            // platforms
+            this.levelMap.update();
         }
 
         draw(context, context1) {
@@ -205,9 +208,7 @@ window.addEventListener('load', function() {
         }
 
         // add stars
-        addStars() {
-            this.stars.push(new Star(this));
-        }
+        addStars() { this.stars.push(new Star(this)); }
     }
 
     const game = new Game(canvas.width, canvas.height);
